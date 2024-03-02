@@ -3,6 +3,8 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { nanoid } from "nanoid";
 
+import ShowServiceCharges from "./components/ShowServiceCharges";
+
 function App() {
   const validationSchema = Yup.object().shape({
     periodLabel: Yup.string()
@@ -50,6 +52,7 @@ function App() {
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
+      <ShowServiceCharges  />
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
