@@ -52,7 +52,18 @@ def create_service_charge():
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 500
-    
+
+@app.route('/service-charges', methods=['GET'])
+@cross_origin()
+def get_service_charges():
+    service_charges = ServiceCharge.query.all()
+    return jsonify([{
+        'period_code': service_charge.period_code,
+        'period_label': service_charge.period_label,
+        'start_date': service_charge.start_date.strftime('%Y-%m-%d'),
+        'end_date': service_charge.end_date.strftime('%Y-%m-%d')
+    } for service_charge in service_charges])
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
