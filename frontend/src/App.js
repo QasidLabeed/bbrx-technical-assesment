@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { nanoid } from 'nanoid'
+
 
 
 function App() {
+
   const validationSchema = Yup.object().shape({
     periodLabel: Yup.string()
       .required("Period Label is required")
@@ -17,6 +20,12 @@ function App() {
       )
   });
 
+  const generateUniquePeriodCode = ()=>{
+  //Generate Max 10 char period code
+  return nanoid(10)
+     
+  }
+
 
 
   const initialValues = {
@@ -26,6 +35,8 @@ function App() {
   };
 
   const onSubmit = (values) => {
+   const periodCode = generateUniquePeriodCode()
+
     console.log(values);
   };
 
