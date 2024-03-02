@@ -28,7 +28,7 @@ function ShowServiceCharges() {
           </tr>
         </thead>
         <tbody>
-          {serviceCharges.map((item) => (
+          {serviceCharges.length !=0 && serviceCharges.map((item) => (
             <tr>
               <td className="border px-4 py-2">{item.period_code}</td>
               <td className="border px-4 py-2">{item.period_label}</td>
@@ -36,6 +36,15 @@ function ShowServiceCharges() {
               <td className="border px-4 py-2">{item.end_date}</td>
             </tr>
           ))}
+          {
+            serviceCharges.length ==0 && 
+            <tr>
+              <td colSpan="4">
+              <h1  className="text-sm text-center ">No charges exists</h1>
+              </td>
+            </tr>
+           
+          }
         </tbody>
       </table>
     </div>
