@@ -38,7 +38,7 @@ function ShowServiceCharges(props) {
           </tr>
         </thead>
         <tbody>
-          {serviceCharges.length !=0 && serviceCharges.map((item) => (
+          {serviceCharges.length !==0 && serviceCharges.map((item) => (
             <tr>
               <td className="border px-4 py-2">{item.period_code}</td>
               <td className="border px-4 py-2">{item.period_label}</td>
@@ -47,7 +47,7 @@ function ShowServiceCharges(props) {
             </tr>
           ))}
           {
-            serviceCharges.length ==0 && 
+            serviceCharges.length ===0 && 
             <tr>
               <td colSpan="4">
               <h1  className="text-sm text-center ">No charges exists</h1>
