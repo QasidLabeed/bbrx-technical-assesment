@@ -3,7 +3,9 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { nanoid } from "nanoid";
 
-export default function ServiceChargeForm() {
+export default function ServiceChargeForm(props) {
+
+    const {setLoadMoreData} = props
 
     const validationSchema = Yup.object().shape({
         periodLabel: Yup.string()
@@ -27,11 +29,8 @@ export default function ServiceChargeForm() {
       };
 
       
-    const onSubmit = (values) => {
+    const onSubmit = (values,{resetForm}) => {
         const periodCode = generateUniquePeriodCode();
-    
-        console.log(values);
-        console.log({ periodCode });
     
         const body = JSON.stringify({
           period_code: periodCode,
@@ -40,14 +39,18 @@ export default function ServiceChargeForm() {
           end_date: values.endDate,
         });
     
-        //The route will use proxy defined in package.json
-        fetch("/service-charge", {
+        //Can be shifted to global contants
+        fetch("http://localhost:5000/service-charge", {
           method: "POST",
           body,
           headers: { "Content-Type": "application/json" },
         })
           .then((res) => res.json())
-          .then((save) => console.log({ save }));
+          .finally(() => setLoadMoreData(true));
+
+          //Reset form after submit
+          resetForm()
+        
       };
     
   return (
@@ -55,7 +58,7 @@ export default function ServiceChargeForm() {
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={onSubmit}
+      onSubmit={onSubmit}      
     >
       <Form className="bg-white p-6 rounded-lg shadow-md">
         <div className="mb-4">

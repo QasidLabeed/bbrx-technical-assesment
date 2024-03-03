@@ -1,19 +1,29 @@
 import React, { useState, useEffect } from "react";
 
-function ShowServiceCharges() {
+
+function ShowServiceCharges(props) {
+  const {loadMoreData,setLoadMoreData} = props
   const [serviceCharges, setSericeCharges] = useState([]);
 
   const fetchServiceCharges = () => {
+    //Base URL can be shifted to global constants
     fetch("http://localhost:5000/service-charges")
       .then((res) => res.json())
       .then((data) => {
         setSericeCharges(data);
+        setLoadMoreData(false)
       });
+
   };
+
+  useEffect(() => {
+    //Fetch more data once the form is submitted
+    loadMoreData && fetchServiceCharges();
+  }, [loadMoreData]);
 
   //Fetch service charges on App load
   useEffect(() => {
-    fetchServiceCharges();
+   fetchServiceCharges();
   }, []);
 
   return (
